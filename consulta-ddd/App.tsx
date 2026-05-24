@@ -60,7 +60,7 @@ export default function App() {
         setData(null);
       } finally {
         setLoading(false);
-        setSearchTrigger('');
+        setSearchTrigger(''); 
       }
     };
 
@@ -74,8 +74,8 @@ export default function App() {
   );
 
   return (
-    <SafeAreaView style={[styles.safeArea, { paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 }]}>
-      <StatusBar barStyle="dark-content" backgroundColor="#f6f8fa" />
+    <SafeAreaView style={styles.safeArea}>
+      <StatusBar barStyle="light-content" backgroundColor="#0d1117" />
       <View style={styles.container}>
         <Text style={styles.title}>Consulta de DDD</Text>
         <Text style={styles.subtitle}>Encontre o estado e cidades pelo código de área</Text>
@@ -84,7 +84,7 @@ export default function App() {
           <TextInput
             style={styles.input}
             placeholder="Digite o DDD (ex: 13)"
-            placeholderTextColor="#8c959f"
+            placeholderTextColor="#8b949e"
             keyboardType="numeric"
             maxLength={2}
             value={inputValue}
@@ -102,7 +102,7 @@ export default function App() {
 
         {loading && (
           <View style={styles.feedbackContainer}>
-            <ActivityIndicator size="small" color="#0969da" />
+            <ActivityIndicator size="large" color="#58a6ff" />
             <Text style={styles.feedbackText}>Buscando localidades...</Text>
           </View>
         )}
@@ -115,12 +115,10 @@ export default function App() {
 
         {data && !loading && (
           <View style={styles.resultsContainer}>
-            <View style={styles.resultsHeader}>
-              <Text style={styles.listHeader}>Cidades ({data.cities.length})</Text>
-              <View style={styles.stateBadge}>
-                <Text style={styles.stateBadgeText}>{data.state}</Text>
-              </View>
+            <View style={styles.stateBadge}>
+              <Text style={styles.stateBadgeText}>Estado: {data.state}</Text>
             </View>
+            <Text style={styles.listHeader}>Cidades ({data.cities.length}):</Text>
             
             <FlatList
               data={data.cities}
@@ -139,124 +137,114 @@ export default function App() {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#f6f8fa',
+    backgroundColor: '#0d1117',
   },
   container: {
     flex: 1,
-    padding: 16,
+    paddingHorizontal: 24,
+    paddingTop: Platform.OS === 'android' ? (StatusBar.currentHeight || 0) + 24 : 24,
   },
   title: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: '#24292f',
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: '#c9d1d9',
     marginBottom: 4,
   },
   subtitle: {
     fontSize: 14,
-    color: '#57606a',
-    marginBottom: 24,
+    color: '#8b949e',
+    marginBottom: 32,
   },
   inputContainer: {
     flexDirection: 'row',
-    marginBottom: 16,
-    gap: 8,
+    marginBottom: 24,
+    gap: 12,
   },
   input: {
     flex: 1,
-    height: 36,
-    backgroundColor: '#ffffff',
+    height: 56,
+    backgroundColor: '#0d1117',
     borderRadius: 6,
-    paddingHorizontal: 12,
-    fontSize: 14,
-    color: '#24292f',
+    paddingHorizontal: 16,
+    fontSize: 16,
+    color: '#c9d1d9',
     borderWidth: 1,
-    borderColor: '#d0d7de',
+    borderColor: '#30363d',
   },
   button: {
-    height: 36,
-    backgroundColor: '#2da44e',
+    height: 56,
+    backgroundColor: '#238636',
     borderRadius: 6,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 16,
+    paddingHorizontal: 24,
     borderWidth: 1,
-    borderColor: 'rgba(27, 31, 36, 0.15)',
+    borderColor: 'rgba(240, 246, 252, 0.1)',
   },
   buttonText: {
     color: '#ffffff',
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: '600',
   },
   feedbackContainer: {
     alignItems: 'center',
-    marginTop: 32,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    gap: 8,
+    marginTop: 40,
   },
   feedbackText: {
-    color: '#57606a',
+    marginTop: 12,
+    color: '#8b949e',
     fontSize: 14,
   },
   errorContainer: {
-    backgroundColor: '#ffebe9',
+    backgroundColor: 'rgba(248, 81, 73, 0.1)',
     padding: 16,
     borderRadius: 6,
     borderWidth: 1,
-    borderColor: 'rgba(255, 129, 130, 0.4)',
+    borderColor: 'rgba(248, 81, 73, 0.4)',
   },
   errorText: {
-    color: '#cf222e',
-    fontSize: 14,
-    fontWeight: '600',
+    color: '#ff7b72',
+    textAlign: 'center',
+    fontWeight: '500',
   },
   resultsContainer: {
     flex: 1,
-    backgroundColor: '#ffffff',
-    borderWidth: 1,
-    borderColor: '#d0d7de',
-    borderRadius: 6,
-    overflow: 'hidden',
-  },
-  resultsHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: '#f6f8fa',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: '#d0d7de',
+    marginTop: 8,
   },
   stateBadge: {
-    backgroundColor: '#ddf4ff',
-    paddingVertical: 2,
-    paddingHorizontal: 10,
-    borderRadius: 12,
+    alignSelf: 'flex-start',
+    backgroundColor: 'rgba(56, 139, 253, 0.1)',
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 20,
     borderWidth: 1,
-    borderColor: 'rgba(84, 174, 255, 0.4)',
+    borderColor: 'rgba(56, 139, 253, 0.4)',
+    marginBottom: 16,
   },
   stateBadgeText: {
-    color: '#0969da',
-    fontWeight: '600',
-    fontSize: 12,
+    color: '#58a6ff',
+    fontWeight: 'bold',
+    fontSize: 14,
   },
   listHeader: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: '600',
-    color: '#24292f',
+    color: '#c9d1d9',
+    marginBottom: 12,
   },
   listContent: {
-    paddingBottom: 8,
+    paddingBottom: 24,
   },
   cityCard: {
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#eff3f6',
+    backgroundColor: '#161b22',
+    padding: 16,
+    borderRadius: 6,
+    marginBottom: 8,
+    borderWidth: 1,
+    borderColor: '#30363d',
   },
   cityText: {
-    fontSize: 14,
-    color: '#24292f',
+    fontSize: 15,
+    color: '#c9d1d9',
   },
 });
